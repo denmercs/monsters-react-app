@@ -13,6 +13,8 @@ class App extends Component {
       monsters: [],
       searchField: ""
     };
+
+    // this.handleChange = this.handleChange.bind(this); --> optional
   }
 
   componentDidMount() {
@@ -20,6 +22,15 @@ class App extends Component {
       .then(res => res.json())
       .then(users => this.setState({ monsters: users }));
   }
+
+  /** OPTIONAL BINDING TO THE THIS AT APP */
+  // handleChange(event) {
+  //   this.setState({ searchField: event.target.value });
+  // }
+
+  handleChange = event => {
+    this.setState({ searchField: event.target.value });
+  };
 
   render() {
     const { monsters, searchField } = this.state;
@@ -29,11 +40,10 @@ class App extends Component {
 
     return (
       <div className="App">
+        <h1>Monsters Rolodex</h1>
         <SearchBox
           placeholder="search monsters"
-          handleChange={event =>
-            this.setState({ searchField: event.target.value })
-          }
+          handleChange={this.handleChange}
         />
         <CardList monsters={filteredMonsters} />
       </div>
